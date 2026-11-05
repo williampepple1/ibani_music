@@ -14,7 +14,8 @@ import {
   Music,
   Volume2,
   VolumeX,
-  Play
+  Play,
+  MessageCircle
 } from 'lucide-react';
 import { getYouTubeEmbedUrl, getYouTubeThumbnail } from '../utils/youtube';
 
@@ -81,10 +82,40 @@ export default function VideoPlayer({
   const embedUrl = getYouTubeEmbedUrl(currentSong.youtubeId, true, isMuted);
   const youtubeWatchUrl = `https://www.youtube.com/watch?v=${currentSong.youtubeId}`;
 
-  const handleCopyLink = () => {
-    navigator.clipboard.writeText(youtubeWatchUrl);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const getShareableUrl = () => {
+    if (typeof window !== 'undefined' && window.location.origin) {
+      return `${window.location.origin}/?v=${currentSong.youtubeId}`;
+    }
+    return youtubeWatchUrl;
+  };
+
+  const handleCopyLink = async () => {
+    const shareUrl = getShareableUrl();
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(shareUrl);
+      } else {
+        const tempInput = document.createElement('input');
+        tempInput.value = shareUrl;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+      }
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (e) {
+      console.warn('Copy failed:', e);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  const handleShareWhatsApp = () => {
+    const shareUrl = getShareableUrl();
+    const text = `🎵 Listen to "${currentSong.title}" (${currentSong.artist}) on Ibani Music: ${shareUrl}`;
+    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
   };
 
   const hasLyrics = currentSong.lyrics && currentSong.lyrics.length > 0;
@@ -212,12 +243,23 @@ export default function VideoPlayer({
 
               <button
                 type="button"
-                className="btn btn-icon"
+                className="btn btn-secondary btn-sm"
                 onClick={handleCopyLink}
-                title="Copy Link"
-                aria-label="Copy Link"
+                title="Copy shareable link"
+                aria-label="Copy shareable link"
               >
-                {copied ? <Check size={17} className="text-success" /> : <Share2 size={17} />}
+                {copied ? <Check size={14} className="text-success" /> : <Share2 size={14} />}
+                <span>{copied ? 'Copied!' : 'Copy Link'}</span>
+              </button>
+
+              <button
+                type="button"
+                className="btn btn-icon btn-whatsapp"
+                onClick={handleShareWhatsApp}
+                title="Share on WhatsApp with preview"
+                aria-label="Share on WhatsApp with preview"
+              >
+                <MessageCircle size={16} />
               </button>
 
               <a

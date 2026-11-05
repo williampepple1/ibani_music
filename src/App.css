@@ -325,6 +325,17 @@
   50% { box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.2); }
 }
 
+.btn-whatsapp {
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+}
+
+.btn-whatsapp:hover {
+  background: #f0fdf4;
+  color: #16a34a;
+  border-color: #86efac;
+}
+
 .player-meta-box {
   margin-top: 1.25rem;
   padding: 1.25rem 1.5rem;
