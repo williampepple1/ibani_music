@@ -40,7 +40,7 @@ export function getYouTubeThumbnail(videoId) {
   return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
 }
 
-export function getYouTubeEmbedUrl(videoId, autoplay = true, isMuted = true) {
+export function getYouTubeEmbedUrl(videoId, autoplay = true, isMuted = false) {
   if (!videoId) return '';
   const params = new URLSearchParams({
     rel: '0',
@@ -55,6 +55,8 @@ export function getYouTubeEmbedUrl(videoId, autoplay = true, isMuted = true) {
   
   if (isMuted) {
     params.set('mute', '1');
+  } else {
+    params.set('mute', '0');
   }
   
   return `https://www.youtube.com/embed/${videoId}?${params.toString()}`;

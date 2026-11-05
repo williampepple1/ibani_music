@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { 
   Maximize2, 
   Minimize2, 
@@ -26,12 +26,13 @@ export default function VideoPlayer({
   const [theaterMode, setTheaterMode] = useState(false);
   const [showLyrics, setShowLyrics] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [isMuted, setIsMuted] = useState(true);
+  
+  // Unmuted by default: mute=0
+  const [isMuted, setIsMuted] = useState(false);
   const iframeRef = useRef(null);
 
   if (!currentSong) return null;
 
-  // Send control commands to YouTube iframe via postMessage
   const sendYouTubeCommand = (func, args = '') => {
     try {
       if (iframeRef.current && iframeRef.current.contentWindow) {
@@ -45,30 +46,16 @@ export default function VideoPlayer({
     }
   };
 
-  const handleUnmute = () => {
-    setIsMuted(false);
-    sendYouTubeCommand('unMute');
-    sendYouTubeCommand('setVolume', [100]);
+  const toggleMute = () => {
+    if (isMuted) {
+      setIsMuted(false);
+      sendYouTubeCommand('unMute');
+      sendYouTubeCommand('setVolume', [100]);
+    } else {
+      setIsMuted(true);
+      sendYouTubeCommand('mute');
+    }
   };
-
-  const handleMute = () => {
-    setIsMuted(true);
-    sendYouTubeCommand('mute');
-  };
-
-  // Optional: Listen for any user gesture on document to automatically unmute
-  useEffect(() => {
-    const handleFirstInteraction = () => {
-      if (isMuted) {
-        handleUnmute();
-      }
-    };
-
-    window.addEventListener('click', handleFirstInteraction, { once: true });
-    return () => {
-      window.removeEventListener('click', handleFirstInteraction);
-    };
-  }, [isMuted]);
 
   const embedUrl = getYouTubeEmbedUrl(currentSong.youtubeId, true, isMuted);
   const youtubeWatchUrl = `https://www.youtube.com/watch?v=${currentSong.youtubeId}`;
@@ -138,28 +125,16 @@ export default function VideoPlayer({
             </div>
 
             <div className="player-view-controls">
-              {/* Unmute / Volume Action */}
-              {isMuted ? (
-                <button
-                  type="button"
-                  className="btn btn-unmute-prompt"
-                  onClick={handleUnmute}
-                  title="Click to enable sound"
-                >
-                  <VolumeX size={16} />
-                  <span>Tap to Unmute Audio</span>
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  className="btn btn-icon"
-                  onClick={handleMute}
-                  title="Mute video"
-                  aria-label="Mute video"
-                >
-                  <Volume2 size={16} />
-                </button>
-              )}
+              {/* Volume Button */}
+              <button
+                type="button"
+                className="btn btn-icon"
+                onClick={toggleMute}
+                title={isMuted ? "Unmute audio" : "Mute audio"}
+                aria-label={isMuted ? "Unmute audio" : "Mute audio"}
+              >
+                {isMuted ? <VolumeX size={17} /> : <Volume2 size={17} />}
+              </button>
 
               {hasLyrics && (
                 <button
