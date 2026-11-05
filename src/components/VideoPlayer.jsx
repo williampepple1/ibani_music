@@ -148,6 +148,12 @@ export default function VideoPlayer({
                 <MapPin size={12} />
                 {currentSong.kingdom}
               </span>
+              {currentSong.sourceChannel && (
+                <span className="badge badge-accent">
+                  <Sparkles size={12} />
+                  @{currentSong.sourceChannel}
+                </span>
+              )}
               {currentSong.year && (
                 <span className="badge badge-year">{currentSong.year}</span>
               )}

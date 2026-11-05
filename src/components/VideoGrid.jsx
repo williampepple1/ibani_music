@@ -14,7 +14,7 @@ export default function VideoGrid({
   const [selectedKingdom, setSelectedKingdom] = useState('All');
 
   // Categories list
-  const categories = ['All', 'Heritage Club', 'Traditional', 'Masquerade & Folk', 'Choral & Gospel', 'Language & Lessons', 'Custom'];
+  const categories = ['All', 'Ibanise Archive', 'Heritage Club', 'Traditional', 'Masquerade & Folk', 'Language & Lessons', 'Custom'];
   const kingdoms = ['All', 'Grand Bonny', 'Opobo Kingdom', 'Pan-Ibani'];
 
   // Filter songs
@@ -28,6 +28,7 @@ export default function VideoGrid({
 
       const matchesCategory = 
         selectedCategory === 'All' ? true :
+        selectedCategory === 'Ibanise Archive' ? (song.sourceChannel === 'Ibanise') :
         selectedCategory === 'Custom' ? Boolean(song.isCustom) :
         song.category === selectedCategory;
 
@@ -168,6 +169,11 @@ export default function VideoGrid({
                         <MapPin size={11} />
                         {song.kingdom}
                       </span>
+                      {song.sourceChannel && (
+                        <span className="badge badge-accent-sm">
+                          @{song.sourceChannel}
+                        </span>
+                      )}
                     </div>
 
                     <h3 className="card-title" title={song.title}>
