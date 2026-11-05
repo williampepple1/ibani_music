@@ -30,7 +30,18 @@ export default function App() {
     return INITIAL_IBANI_SONGS;
   });
 
+  // Pick a random song to automatically play on initial site load
   const [currentSongId, setCurrentSongId] = useState(() => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY_CUSTOM_SONGS);
+      const all = stored ? [...JSON.parse(stored), ...INITIAL_IBANI_SONGS] : INITIAL_IBANI_SONGS;
+      if (all.length > 0) {
+        const randIdx = Math.floor(Math.random() * all.length);
+        return all[randIdx]?.id || all[0]?.id;
+      }
+    } catch (err) {
+      console.error(err);
+    }
     return INITIAL_IBANI_SONGS[0]?.id || '';
   });
 
@@ -115,6 +126,16 @@ export default function App() {
       />
 
       <main className="main-content" id="home">
+        <header className="simple-intro-header">
+          <div className="container">
+            <h1 className="simple-intro-title">Ịbạnị Nume &mdash; Ibani Songs</h1>
+            <p className="simple-intro-desc">
+              <em>Nume</em> means <strong>song</strong> in the indigenous Ibani language. 
+              Explore traditional folk recordings, rhythms, and cultural music from the Niger Delta.
+            </p>
+          </div>
+        </header>
+
         <VideoPlayer
           currentSong={currentSong}
           currentIndex={currentIndex >= 0 ? currentIndex : 0}

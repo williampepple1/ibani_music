@@ -27,7 +27,7 @@ export default function VideoPlayer({
 
   if (!currentSong) return null;
 
-  const embedUrl = getYouTubeEmbedUrl(currentSong.youtubeId, false);
+  const embedUrl = getYouTubeEmbedUrl(currentSong.youtubeId, true);
   const youtubeWatchUrl = `https://www.youtube.com/watch?v=${currentSong.youtubeId}`;
 
   const handleCopyLink = () => {
