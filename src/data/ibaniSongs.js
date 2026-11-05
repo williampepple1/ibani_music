@@ -234,5 +234,113 @@ export const INITIAL_IBANI_SONGS = [
     lyrics: [
       { ibani: 'Ukonu wariapu wa bie belem Tamuno', english: 'The household of Ukonu gives sweet praise to the Almighty' }
     ]
+  },
+  {
+    id: 'ejesilem-movement-album-1',
+    youtubeId: 'amSq2bAE67M',
+    title: 'Ejesilem Movement Album',
+    artist: 'Ejesilem Movement (Opobo)',
+    category: 'Opobo Heritage',
+    year: 'Classic',
+    duration: '16:16',
+    lyrics: [
+      { ibani: 'Ejesilem wa kuro bo, biri so', english: 'Ejesilem movement brings rhythm and pride to the land' }
+    ]
+  },
+  {
+    id: 'ejesilem-movement-album-2',
+    youtubeId: 'eWqvcID0wpM',
+    title: 'Ejesilem Movement Album (II)',
+    artist: 'Ejesilem Movement (Opobo)',
+    category: 'Opobo Heritage',
+    year: 'Classic',
+    duration: '17:29',
+    lyrics: [
+      { ibani: 'Ibani biri so, wa polo koroma', english: 'The sounds of Ibani echo across our homeland' }
+    ]
+  },
+  {
+    id: 'ibani-highlife-suite',
+    youtubeId: 'e3PG_8mJhZ4',
+    title: 'Ibani Highlife Suite',
+    artist: 'Ibani Traditional Highlife Band',
+    category: 'Ibani Highlife',
+    year: 'Classic',
+    duration: '19:29',
+    lyrics: [
+      { ibani: 'Wa fite biri, wa koroma se', english: 'Joyful melodies and dance from the Niger Delta' }
+    ]
+  },
+  {
+    id: 'ama-ngunume-ogbo-opobo',
+    youtubeId: 'VPI5BOTiOi0',
+    title: 'Ama Ngunume Ogbo Opobo Kingdom',
+    artist: 'Ama Ngunume Ogbo',
+    category: 'Opobo Heritage',
+    year: 'Cultural',
+    duration: '6:24',
+    lyrics: [
+      { ibani: 'Ama Ngunume Ogbo, Opobo biri so', english: 'The song guild of Opobo Kingdom lifts their voices' }
+    ]
+  },
+  {
+    id: 'lily-club-bonny-pt1',
+    youtubeId: '9piDtHANUJo',
+    title: 'Lily Club, Bonny (Part 1)',
+    artist: 'Lily Cultural Club (Grand Bonny)',
+    category: 'Bonny Heritage',
+    year: 'Classic',
+    duration: '30:05',
+    lyrics: [
+      { ibani: 'Lily Club Grand Bonny, wa polo bu', english: 'Lily Club brings the rich melodies of Bonny Kingdom' }
+    ]
+  },
+  {
+    id: 'lily-club-bonny-pt2',
+    youtubeId: 'euLgGprjF9U',
+    title: 'Lily Club, Bonny (Part 2)',
+    artist: 'Lily Cultural Club (Grand Bonny)',
+    category: 'Bonny Heritage',
+    year: 'Classic',
+    duration: '27:29',
+    lyrics: [
+      { ibani: 'Wa kuro biri, wa fite ye', english: 'Continuing the timeless folklore of Grand Bonny' }
+    ]
+  },
+  {
+    id: 'ugele-mkpa-opobo',
+    youtubeId: '4G-AXCzUrgA',
+    title: 'Ugele Mkpa, Opobo',
+    artist: 'Opobo Cultural Society',
+    category: 'Masquerade & Folk',
+    year: 'Cultural',
+    duration: '11:47',
+    lyrics: [
+      { ibani: 'Ugele mkpa, wa polo koroma', english: 'Sacred rhythms and drums of Opobo heritage' }
+    ]
+  },
+  {
+    id: 'tiilamam-tribal-song',
+    youtubeId: '1w3nh0YhBAU',
+    title: 'Tiilamam (A Typical Ibani Song)',
+    artist: 'Vivian Fubara',
+    category: 'Ibani Folk',
+    year: 'Traditional',
+    duration: '0:59',
+    lyrics: [
+      { ibani: 'Tiilamam, Ibani nume kuro', english: 'Traditional Ibani chant and rhythm' }
+    ]
+  },
+  {
+    id: 'opobo-lee-seghi-ogbo',
+    youtubeId: 'ID5S5-DzIF0',
+    title: 'Opobo Lẹé Seghi Ogbo',
+    artist: 'Lẹé Seghi Cultural Dance',
+    category: 'Cultural Dance',
+    year: 'Traditional',
+    duration: '1:33',
+    lyrics: [
+      { ibani: 'Lẹé seghi ogbo, wa seghi koroma', english: 'Graceful Ibani cultural dance and songs of Opobo' }
+    ]
   }
 ];
