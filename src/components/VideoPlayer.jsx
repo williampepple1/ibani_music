@@ -6,14 +6,10 @@ import {
   SkipForward, 
   Shuffle, 
   ExternalLink, 
-  Copy, 
   Check, 
-  BookOpen, 
-  Info, 
-  Sparkles,
-  MapPin,
+  Share2,
   Tag,
-  Share2
+  Music
 } from 'lucide-react';
 import { getYouTubeEmbedUrl } from '../utils/youtube';
 
@@ -26,16 +22,10 @@ export default function VideoPlayer({
   currentIndex 
 }) {
   const [theaterMode, setTheaterMode] = useState(false);
-  const [activeDrawerTab, setActiveDrawerTab] = useState('lyrics'); // 'lyrics' | 'about' | 'vocab'
+  const [showLyrics, setShowLyrics] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  if (!currentSong) {
-    return (
-      <div className="player-empty-card">
-        <p>No song selected. Choose a song from the library below.</p>
-      </div>
-    );
-  }
+  if (!currentSong) return null;
 
   const embedUrl = getYouTubeEmbedUrl(currentSong.youtubeId, false);
   const youtubeWatchUrl = `https://www.youtube.com/watch?v=${currentSong.youtubeId}`;
@@ -46,6 +36,8 @@ export default function VideoPlayer({
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const hasLyrics = currentSong.lyrics && currentSong.lyrics.length > 0;
+
   return (
     <section className={`player-section ${theaterMode ? 'theater-mode' : ''}`} id="player-view">
       <div className="player-container">
@@ -54,7 +46,7 @@ export default function VideoPlayer({
           <div className="video-viewport">
             <iframe
               src={embedUrl}
-              title={`${currentSong.title} - Ibani Music Player`}
+              title={currentSong.title}
               className="youtube-iframe"
               width="1280"
               height="720"
@@ -70,38 +62,49 @@ export default function VideoPlayer({
                 type="button"
                 className="btn btn-icon"
                 onClick={onPrev}
-                title="Previous track"
-                aria-label="Previous track"
+                title="Previous video"
+                aria-label="Previous video"
               >
-                <SkipBack size={19} />
+                <SkipBack size={18} />
               </button>
 
               <button
                 type="button"
                 className="btn btn-icon"
                 onClick={onNext}
-                title="Next track"
-                aria-label="Next track"
+                title="Next video"
+                aria-label="Next video"
               >
-                <SkipForward size={19} />
+                <SkipForward size={18} />
               </button>
 
               <button
                 type="button"
                 className="btn btn-icon"
                 onClick={onShuffle}
-                title="Shuffle track"
-                aria-label="Shuffle track"
+                title="Shuffle"
+                aria-label="Shuffle"
               >
-                <Shuffle size={18} />
+                <Shuffle size={17} />
               </button>
 
               <span className="track-counter">
-                {currentIndex + 1} / {totalSongs}
+                {currentIndex + 1} of {totalSongs}
               </span>
             </div>
 
             <div className="player-view-controls">
+              {hasLyrics && (
+                <button
+                  type="button"
+                  className={`btn btn-secondary btn-sm ${showLyrics ? 'active' : ''}`}
+                  onClick={() => setShowLyrics(!showLyrics)}
+                >
+                  <Music size={14} />
+                  <span>{showLyrics ? 'Hide Lyrics' : 'Lyrics'}</span>
+                </button>
+              )}
+
               <button
                 type="button"
                 className="btn btn-icon"
@@ -109,17 +112,17 @@ export default function VideoPlayer({
                 title={theaterMode ? 'Exit theater mode' : 'Theater mode'}
                 aria-label={theaterMode ? 'Exit theater mode' : 'Theater mode'}
               >
-                {theaterMode ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
+                {theaterMode ? <Minimize2 size={17} /> : <Maximize2 size={17} />}
               </button>
 
               <button
                 type="button"
                 className="btn btn-icon"
                 onClick={handleCopyLink}
-                title="Copy YouTube Link"
-                aria-label="Copy YouTube Link"
+                title="Copy Link"
+                aria-label="Copy Link"
               >
-                {copied ? <Check size={18} className="text-success" /> : <Share2 size={18} />}
+                {copied ? <Check size={17} className="text-success" /> : <Share2 size={17} />}
               </button>
 
               <a
@@ -127,10 +130,10 @@ export default function VideoPlayer({
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-icon"
-                title="Watch directly on YouTube"
-                aria-label="Watch directly on YouTube"
+                title="Open on YouTube"
+                aria-label="Open on YouTube"
               >
-                <ExternalLink size={18} />
+                <ExternalLink size={17} />
               </a>
             </div>
           </div>
@@ -138,120 +141,36 @@ export default function VideoPlayer({
 
         {/* Video Info Header */}
         <div className="player-meta-box">
-          <div className="meta-header">
-            <div className="meta-badges">
-              <span className="badge badge-category">
-                <Tag size={12} />
-                {currentSong.category}
-              </span>
-              <span className="badge badge-kingdom">
-                <MapPin size={12} />
-                {currentSong.kingdom}
-              </span>
-              {currentSong.sourceChannel && (
-                <span className="badge badge-accent">
-                  <Sparkles size={12} />
-                  @{currentSong.sourceChannel}
-                </span>
-              )}
-              {currentSong.year && (
-                <span className="badge badge-year">{currentSong.year}</span>
-              )}
-            </div>
-
-            <h2 className="meta-song-title">{currentSong.title}</h2>
-            <h3 className="meta-artist-name">{currentSong.artist}</h3>
+          <div className="meta-badges">
+            <span className="badge badge-category">
+              <Tag size={12} />
+              {currentSong.category}
+            </span>
+            {currentSong.year && (
+              <span className="badge badge-year">{currentSong.year}</span>
+            )}
           </div>
 
-          {/* Interactive Lyrics & Info Tabs */}
-          <div className="player-drawer">
-            <div className="drawer-tabs" role="tablist">
-              <button
-                type="button"
-                role="tab"
-                aria-selected={activeDrawerTab === 'lyrics'}
-                className={`drawer-tab-btn ${activeDrawerTab === 'lyrics' ? 'active' : ''}`}
-                onClick={() => setActiveDrawerTab('lyrics')}
-              >
-                <BookOpen size={16} />
-                <span>Ibani Lyrics & Meaning</span>
-              </button>
+          <h1 className="meta-song-title">{currentSong.title}</h1>
+          <h2 className="meta-artist-name">{currentSong.artist}</h2>
 
-              <button
-                type="button"
-                role="tab"
-                aria-selected={activeDrawerTab === 'about'}
-                className={`drawer-tab-btn ${activeDrawerTab === 'about' ? 'active' : ''}`}
-                onClick={() => setActiveDrawerTab('about')}
-              >
-                <Info size={16} />
-                <span>Cultural Background</span>
-              </button>
-
-              {currentSong.vocabHighlight && currentSong.vocabHighlight.length > 0 && (
-                <button
-                  type="button"
-                  role="tab"
-                  aria-selected={activeDrawerTab === 'vocab'}
-                  className={`drawer-tab-btn ${activeDrawerTab === 'vocab' ? 'active' : ''}`}
-                  onClick={() => setActiveDrawerTab('vocab')}
-                >
-                  <Sparkles size={16} />
-                  <span>Key Vocabulary</span>
-                </button>
-              )}
-            </div>
-
-            <div className="drawer-content">
-              {activeDrawerTab === 'lyrics' && (
-                <div className="lyrics-panel">
-                  {currentSong.lyrics && currentSong.lyrics.length > 0 ? (
-                    <div className="lyrics-lines">
-                      <p className="lyrics-hint">
-                        💡 Sing along! Notice the Ibani vowels with sub-dots (ẹ, ị, ọ, ụ) for proper pronunciation.
-                      </p>
-                      {currentSong.lyrics.map((line, idx) => (
-                        <div key={idx} className="lyric-row">
-                          <span className="lyric-ibani">{line.ibani}</span>
-                          <span className="lyric-english">{line.english}</span>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <div className="empty-lyrics-notice">
-                      <p>Full transcription for this song is being compiled by community members.</p>
-                      <p className="sub-notice">Know the words or translation? Use the "Add YouTube Song" button to contribute or submit revisions!</p>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {activeDrawerTab === 'about' && (
-                <div className="about-panel">
-                  <p className="about-text">{currentSong.description}</p>
-                  <div className="about-origin-pill">
-                    <strong>Cultural Origin:</strong> {currentSong.kingdom} &bull; Rivers State, Niger Delta
+          {/* Simple Lyrics toggle (only shown when requested) */}
+          {hasLyrics && showLyrics && (
+            <div className="simple-lyrics-box">
+              <div className="lyrics-lines">
+                {currentSong.lyrics.map((line, idx) => (
+                  <div key={idx} className="lyric-row">
+                    <span className="lyric-ibani">{line.ibani}</span>
+                    {line.english && (
+                      <span className="lyric-english">{line.english}</span>
+                    )}
                   </div>
-                </div>
-              )}
-
-              {activeDrawerTab === 'vocab' && currentSong.vocabHighlight && (
-                <div className="vocab-panel">
-                  <div className="vocab-chips-grid">
-                    {currentSong.vocabHighlight.map((item, idx) => (
-                      <div key={idx} className="vocab-chip-card">
-                        <span className="vocab-word">{item.word}</span>
-                        <span className="vocab-meaning">{item.meaning}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </section>
   );
 }
-

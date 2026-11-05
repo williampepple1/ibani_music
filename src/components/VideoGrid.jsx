@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Search, Play, Volume2, Trash2, Tag, MapPin, Plus, Sparkles, Filter } from 'lucide-react';
+import { Search, Play, Volume2, Trash2, Tag, Plus } from 'lucide-react';
 import { getYouTubeThumbnail } from '../utils/youtube';
 
 export default function VideoGrid({ 
@@ -11,64 +11,64 @@ export default function VideoGrid({
 }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [selectedKingdom, setSelectedKingdom] = useState('All');
 
-  // Categories list
-  const categories = ['All', 'Ibanise Archive', 'Heritage Club', 'Traditional', 'Masquerade & Folk', 'Language & Lessons', 'Custom'];
-  const kingdoms = ['All', 'Grand Bonny', 'Opobo Kingdom', 'Pan-Ibani'];
+  const categories = [
+    'All', 
+    'Eremina Ogbo', 
+    'Ejesilem Movement', 
+    'Ikia Mina Ogbo', 
+    'Masquerade', 
+    'Custom'
+  ];
 
-  // Filter songs
   const filteredSongs = useMemo(() => {
     return songs.filter(song => {
+      const q = searchQuery.toLowerCase();
       const matchesSearch = 
-        song.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        song.artist.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        song.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        song.lyrics?.some(l => l.ibani.toLowerCase().includes(searchQuery.toLowerCase()) || l.english.toLowerCase().includes(searchQuery.toLowerCase()));
+        song.title.toLowerCase().includes(q) ||
+        song.artist.toLowerCase().includes(q);
 
-      const matchesCategory = 
-        selectedCategory === 'All' ? true :
-        selectedCategory === 'Ibanise Archive' ? (song.sourceChannel === 'Ibanise') :
-        selectedCategory === 'Custom' ? Boolean(song.isCustom) :
-        song.category === selectedCategory;
+      let matchesCategory = true;
+      if (selectedCategory === 'Eremina Ogbo') {
+        matchesCategory = song.artist.toLowerCase().includes('eremina');
+      } else if (selectedCategory === 'Ejesilem Movement') {
+        matchesCategory = song.artist.toLowerCase().includes('ejesilem');
+      } else if (selectedCategory === 'Ikia Mina Ogbo') {
+        matchesCategory = song.artist.toLowerCase().includes('ikia');
+      } else if (selectedCategory === 'Masquerade') {
+        matchesCategory = song.category === 'Masquerade & Folk' || song.title.toLowerCase().includes('nwaotam');
+      } else if (selectedCategory === 'Custom') {
+        matchesCategory = Boolean(song.isCustom);
+      }
 
-      const matchesKingdom = 
-        selectedKingdom === 'All' ? true :
-        song.kingdom === selectedKingdom;
-
-      return matchesSearch && matchesCategory && matchesKingdom;
+      return matchesSearch && matchesCategory;
     });
-  }, [songs, searchQuery, selectedCategory, selectedKingdom]);
+  }, [songs, searchQuery, selectedCategory]);
 
   return (
     <section className="catalog-section" id="catalog">
       <div className="container">
         <div className="catalog-header">
-          <div>
-            <h2 className="section-title">Music & Audio Vault</h2>
-            <p className="section-subtitle">
-              Browse recorded performances, traditional songs, and spoken lessons from across the Ibani realm.
-            </p>
-          </div>
+          <h2 className="section-title">Music Library ({filteredSongs.length})</h2>
 
           <button 
             type="button" 
             className="btn btn-primary"
             onClick={onOpenAddModal}
           >
-            <Plus size={18} />
-            <span>Add YouTube Song</span>
+            <Plus size={16} />
+            <span>Add Video</span>
           </button>
         </div>
 
         {/* Search & Filter Bar */}
         <div className="filter-controls-card">
           <div className="search-bar">
-            <Search className="search-icon" size={20} />
+            <Search className="search-icon" size={18} />
             <input
               type="text"
               className="search-input"
-              placeholder="Search by song name, artist, kingdom, lyrics (e.g. Igirigi, Opobo, Bonny, Nwaotam)..."
+              placeholder="Search by title or artist..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -83,36 +83,17 @@ export default function VideoGrid({
             )}
           </div>
 
-          <div className="filter-row">
-            <div className="category-chips" role="radiogroup" aria-label="Filter by category">
-              {categories.map(cat => (
-                <button
-                  key={cat}
-                  type="button"
-                  className={`chip-btn ${selectedCategory === cat ? 'active' : ''}`}
-                  onClick={() => setSelectedCategory(cat)}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
-
-            <div className="kingdom-filter-group">
-              <label htmlFor="kingdom-select" className="filter-label">
-                <MapPin size={14} />
-                <span>Region:</span>
-              </label>
-              <select
-                id="kingdom-select"
-                className="kingdom-select"
-                value={selectedKingdom}
-                onChange={(e) => setSelectedKingdom(e.target.value)}
+          <div className="category-chips">
+            {categories.map(cat => (
+              <button
+                key={cat}
+                type="button"
+                className={`chip-btn ${selectedCategory === cat ? 'active' : ''}`}
+                onClick={() => setSelectedCategory(cat)}
               >
-                {kingdoms.map(k => (
-                  <option key={k} value={k}>{k}</option>
-                ))}
-              </select>
-            </div>
+                {cat}
+              </button>
+            ))}
           </div>
         </div>
 
@@ -140,9 +121,9 @@ export default function VideoGrid({
                     <div className="card-play-overlay">
                       <div className="play-icon-circle">
                         {isPlaying ? (
-                          <Volume2 size={24} className="playing-pulse-icon" />
+                          <Volume2 size={20} />
                         ) : (
-                          <Play size={24} fill="currentColor" />
+                          <Play size={20} fill="currentColor" />
                         )}
                       </div>
                     </div>
@@ -153,29 +134,12 @@ export default function VideoGrid({
 
                     {isPlaying && (
                       <span className="card-now-playing-badge">
-                        <span className="sound-wave"></span>
-                        Now Playing
+                        Playing
                       </span>
                     )}
                   </div>
 
                   <div className="card-info">
-                    <div className="card-meta-line">
-                      <span className="badge badge-category-sm">
-                        <Tag size={11} />
-                        {song.category}
-                      </span>
-                      <span className="badge badge-kingdom-sm">
-                        <MapPin size={11} />
-                        {song.kingdom}
-                      </span>
-                      {song.sourceChannel && (
-                        <span className="badge badge-accent-sm">
-                          @{song.sourceChannel}
-                        </span>
-                      )}
-                    </div>
-
                     <h3 className="card-title" title={song.title}>
                       {song.title}
                     </h3>
@@ -184,15 +148,10 @@ export default function VideoGrid({
                       {song.artist}
                     </p>
 
-                    {song.lyrics && song.lyrics.length > 0 && (
-                      <div className="card-lyric-preview">
-                        <em>"{song.lyrics[0].ibani}"</em>
-                      </div>
-                    )}
-
                     <div className="card-footer">
-                      <span className="play-prompt">
-                        {isPlaying ? 'Currently Active' : 'Click to Play'}
+                      <span className="badge badge-category-sm">
+                        <Tag size={10} />
+                        {song.category}
                       </span>
 
                       {song.isCustom && (
@@ -201,13 +160,13 @@ export default function VideoGrid({
                           className="btn-delete-card"
                           onClick={(e) => {
                             e.stopPropagation();
-                            if (window.confirm(`Remove "${song.title}" from your library?`)) {
+                            if (window.confirm(`Delete "${song.title}"?`)) {
                               onDeleteCustomSong(song.id);
                             }
                           }}
-                          title="Remove custom song"
+                          title="Delete video"
                         >
-                          <Trash2 size={15} />
+                          <Trash2 size={14} />
                         </button>
                       )}
                     </div>
@@ -218,34 +177,20 @@ export default function VideoGrid({
           </div>
         ) : (
           <div className="empty-catalog-state">
-            <Sparkles size={48} className="empty-icon" />
-            <h3>No songs matched your search</h3>
-            <p>Try clearing your search filters or add a new YouTube video link to the vault!</p>
-            <div className="empty-actions">
-              <button 
-                type="button" 
-                className="btn btn-secondary"
-                onClick={() => {
-                  setSearchQuery('');
-                  setSelectedCategory('All');
-                  setSelectedKingdom('All');
-                }}
-              >
-                Reset All Filters
-              </button>
-              <button 
-                type="button" 
-                className="btn btn-primary"
-                onClick={onOpenAddModal}
-              >
-                <Plus size={16} />
-                <span>Add YouTube Video</span>
-              </button>
-            </div>
+            <p>No videos found matching your filter.</p>
+            <button 
+              type="button" 
+              className="btn btn-secondary btn-sm"
+              onClick={() => {
+                setSearchQuery('');
+                setSelectedCategory('All');
+              }}
+            >
+              Reset Search
+            </button>
           </div>
         )}
       </div>
     </section>
   );
 }
-

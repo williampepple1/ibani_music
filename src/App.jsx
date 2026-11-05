@@ -1,11 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
 import VideoPlayer from './components/VideoPlayer';
 import VideoGrid from './components/VideoGrid';
 import AddVideoModal from './components/AddVideoModal';
-import LanguageCorner from './components/LanguageCorner';
-import AboutIbani from './components/AboutIbani';
 import Footer from './components/Footer';
 import { INITIAL_IBANI_SONGS } from './data/ibaniSongs';
 import './App.css';
@@ -14,18 +11,12 @@ const STORAGE_KEY_CUSTOM_SONGS = 'ibani_custom_songs_v1';
 const STORAGE_KEY_THEME = 'ibani_theme_v2';
 
 export default function App() {
-  // Theme state: 'minimal' (Clean Light) | 'studio' (Spotify Dark) | 'warm' (Terracotta & Sand) | 'royal' (Navy)
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem(STORAGE_KEY_THEME) || 'minimal';
   });
 
-  // Active navigation tab
-  const [activeTab, setActiveTab] = useState('player'); // 'player' | 'language' | 'about'
-
-  // Modal state
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
-  // Songs list (curated presets + custom user-added)
   const [songs, setSongs] = useState(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY_CUSTOM_SONGS);
@@ -39,27 +30,20 @@ export default function App() {
     return INITIAL_IBANI_SONGS;
   });
 
-  // Current playing song
   const [currentSongId, setCurrentSongId] = useState(() => {
     return INITIAL_IBANI_SONGS[0]?.id || '';
   });
 
-  // Apply theme to document
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem(STORAGE_KEY_THEME, theme);
   }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
-  };
 
   const currentSong = songs.find(s => s.id === currentSongId) || songs[0];
   const currentIndex = songs.findIndex(s => s.id === currentSongId);
 
   const handleSelectSong = (song) => {
     setCurrentSongId(song.id);
-    setActiveTab('player');
     const playerEl = document.getElementById('player-view');
     if (playerEl) {
       playerEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -91,9 +75,7 @@ export default function App() {
     const updatedSongs = [newSong, ...songs];
     setSongs(updatedSongs);
     setCurrentSongId(newSong.id);
-    setActiveTab('player');
 
-    // Update custom items in localStorage
     try {
       const customOnly = updatedSongs.filter(s => s.isCustom);
       localStorage.setItem(STORAGE_KEY_CUSTOM_SONGS, JSON.stringify(customOnly));
@@ -130,50 +112,25 @@ export default function App() {
         onOpenAddModal={() => setIsAddModalOpen(true)}
         theme={theme}
         onChangeTheme={setTheme}
-        activeTab={activeTab}
-        onSelectTab={setActiveTab}
       />
 
       <main className="main-content" id="home">
-        {activeTab === 'player' && (
-          <>
-            <Hero
-              onStartListening={() => {
-                const playerEl = document.getElementById('player-view');
-                if (playerEl) {
-                  playerEl.scrollIntoView({ behavior: 'smooth' });
-                }
-              }}
-              onExploreLanguage={() => setActiveTab('language')}
-              songCount={songs.length}
-            />
+        <VideoPlayer
+          currentSong={currentSong}
+          currentIndex={currentIndex >= 0 ? currentIndex : 0}
+          totalSongs={songs.length}
+          onNext={handleNext}
+          onPrev={handlePrev}
+          onShuffle={handleShuffle}
+        />
 
-            <VideoPlayer
-              currentSong={currentSong}
-              currentIndex={currentIndex >= 0 ? currentIndex : 0}
-              totalSongs={songs.length}
-              onNext={handleNext}
-              onPrev={handlePrev}
-              onShuffle={handleShuffle}
-            />
-
-            <VideoGrid
-              songs={songs}
-              currentSongId={currentSongId}
-              onSelectSong={handleSelectSong}
-              onDeleteCustomSong={handleDeleteCustomSong}
-              onOpenAddModal={() => setIsAddModalOpen(true)}
-            />
-          </>
-        )}
-
-        {activeTab === 'language' && (
-          <LanguageCorner />
-        )}
-
-        {activeTab === 'about' && (
-          <AboutIbani />
-        )}
+        <VideoGrid
+          songs={songs}
+          currentSongId={currentSongId}
+          onSelectSong={handleSelectSong}
+          onDeleteCustomSong={handleDeleteCustomSong}
+          onOpenAddModal={() => setIsAddModalOpen(true)}
+        />
       </main>
 
       <AddVideoModal
@@ -182,10 +139,7 @@ export default function App() {
         onAddSong={handleAddSong}
       />
 
-      <Footer
-        onOpenAddModal={() => setIsAddModalOpen(true)}
-        onSelectTab={setActiveTab}
-      />
+      <Footer />
     </div>
   );
 }
