@@ -1,13 +1,11 @@
 import React, { useState, useMemo } from 'react';
-import { Search, Play, Volume2, Trash2, Tag, Plus } from 'lucide-react';
+import { Search, Play, Volume2, Tag } from 'lucide-react';
 import { getYouTubeThumbnail } from '../utils/youtube';
 
 export default function VideoGrid({ 
   songs, 
   currentSongId, 
-  onSelectSong, 
-  onDeleteCustomSong,
-  onOpenAddModal 
+  onSelectSong 
 }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -17,8 +15,7 @@ export default function VideoGrid({
     'Eremina Ogbo', 
     'Ejesilem Movement', 
     'Ikia Mina Ogbo', 
-    'Masquerade', 
-    'Custom'
+    'Masquerade'
   ];
 
   const filteredSongs = useMemo(() => {
@@ -37,8 +34,6 @@ export default function VideoGrid({
         matchesCategory = song.artist.toLowerCase().includes('ikia');
       } else if (selectedCategory === 'Masquerade') {
         matchesCategory = song.category === 'Masquerade & Folk' || song.title.toLowerCase().includes('nwaotam');
-      } else if (selectedCategory === 'Custom') {
-        matchesCategory = Boolean(song.isCustom);
       }
 
       return matchesSearch && matchesCategory;
@@ -50,15 +45,6 @@ export default function VideoGrid({
       <div className="container">
         <div className="catalog-header">
           <h2 className="section-title">Music Library ({filteredSongs.length})</h2>
-
-          <button 
-            type="button" 
-            className="btn btn-primary"
-            onClick={onOpenAddModal}
-          >
-            <Plus size={16} />
-            <span>Add Video</span>
-          </button>
         </div>
 
         {/* Search & Filter Bar */}
@@ -153,22 +139,6 @@ export default function VideoGrid({
                         <Tag size={10} />
                         {song.category}
                       </span>
-
-                      {song.isCustom && (
-                        <button
-                          type="button"
-                          className="btn-delete-card"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            if (window.confirm(`Delete "${song.title}"?`)) {
-                              onDeleteCustomSong(song.id);
-                            }
-                          }}
-                          title="Delete video"
-                        >
-                          <Trash2 size={14} />
-                        </button>
-                      )}
                     </div>
                   </div>
                 </article>

@@ -1,7 +1,7 @@
 import React from 'react';
-import { Music, PlusCircle } from 'lucide-react';
+import { Music } from 'lucide-react';
 
-export default function Navbar({ onOpenAddModal }) {
+export default function Navbar() {
   return (
     <header className="navbar">
       <div className="container nav-container">
@@ -14,17 +14,6 @@ export default function Navbar({ onOpenAddModal }) {
             <span className="brand-subtitle">Indigenous Music Videos</span>
           </div>
         </a>
-
-        <div className="nav-actions">
-          <button
-            type="button"
-            className="btn btn-primary add-video-nav-btn"
-            onClick={onOpenAddModal}
-          >
-            <PlusCircle size={17} />
-            <span>Add Video</span>
-          </button>
-        </div>
       </div>
     </header>
   );

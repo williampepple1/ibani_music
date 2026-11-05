@@ -2,42 +2,20 @@ import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import VideoPlayer from './components/VideoPlayer';
 import VideoGrid from './components/VideoGrid';
-import AddVideoModal from './components/AddVideoModal';
 import Footer from './components/Footer';
 import { INITIAL_IBANI_SONGS } from './data/ibaniSongs';
 import './App.css';
 
-const STORAGE_KEY_CUSTOM_SONGS = 'ibani_custom_songs_v1';
-
 export default function App() {
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-
-  const [songs, setSongs] = useState(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY_CUSTOM_SONGS);
-      if (stored) {
-        const customParsed = JSON.parse(stored);
-        return [...customParsed, ...INITIAL_IBANI_SONGS];
-      }
-    } catch (err) {
-      console.error('Error loading custom songs from storage', err);
-    }
-    return INITIAL_IBANI_SONGS;
-  });
+  const songs = INITIAL_IBANI_SONGS;
 
   // Pick a random song to automatically play when the webpage opens
   const [currentSongId, setCurrentSongId] = useState(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY_CUSTOM_SONGS);
-      const all = stored ? [...JSON.parse(stored), ...INITIAL_IBANI_SONGS] : INITIAL_IBANI_SONGS;
-      if (all && all.length > 0) {
-        const randIdx = Math.floor(Math.random() * all.length);
-        return all[randIdx]?.id || all[0]?.id;
-      }
-    } catch (err) {
-      console.error(err);
+    if (INITIAL_IBANI_SONGS.length > 0) {
+      const randIdx = Math.floor(Math.random() * INITIAL_IBANI_SONGS.length);
+      return INITIAL_IBANI_SONGS[randIdx]?.id || INITIAL_IBANI_SONGS[0]?.id;
     }
-    return INITIAL_IBANI_SONGS[0]?.id || '';
+    return '';
   });
 
   const currentSong = songs.find(s => s.id === currentSongId) || songs[0];
@@ -72,44 +50,9 @@ export default function App() {
     setCurrentSongId(songs[randIdx].id);
   };
 
-  const handleAddSong = (newSong) => {
-    const updatedSongs = [newSong, ...songs];
-    setSongs(updatedSongs);
-    setCurrentSongId(newSong.id);
-
-    try {
-      const customOnly = updatedSongs.filter(s => s.isCustom);
-      localStorage.setItem(STORAGE_KEY_CUSTOM_SONGS, JSON.stringify(customOnly));
-    } catch (err) {
-      console.error('Error saving custom song', err);
-    }
-
-    setTimeout(() => {
-      const playerEl = document.getElementById('player-view');
-      if (playerEl) {
-        playerEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }, 100);
-  };
-
-  const handleDeleteCustomSong = (id) => {
-    const updated = songs.filter(s => s.id !== id);
-    setSongs(updated);
-    if (currentSongId === id) {
-      setCurrentSongId(updated[0]?.id || '');
-    }
-
-    try {
-      const customOnly = updated.filter(s => s.isCustom);
-      localStorage.setItem(STORAGE_KEY_CUSTOM_SONGS, JSON.stringify(customOnly));
-    } catch (err) {
-      console.error('Error updating storage after delete', err);
-    }
-  };
-
   return (
     <div className="app-layout">
-      <Navbar onOpenAddModal={() => setIsAddModalOpen(true)} />
+      <Navbar />
 
       <main className="main-content" id="home">
         <header className="simple-intro-header">
@@ -135,16 +78,8 @@ export default function App() {
           songs={songs}
           currentSongId={currentSongId}
           onSelectSong={handleSelectSong}
-          onDeleteCustomSong={handleDeleteCustomSong}
-          onOpenAddModal={() => setIsAddModalOpen(true)}
         />
       </main>
-
-      <AddVideoModal
-        isOpen={isAddModalOpen}
-        onClose={() => setIsAddModalOpen(false)}
-        onAddSong={handleAddSong}
-      />
 
       <Footer />
     </div>
