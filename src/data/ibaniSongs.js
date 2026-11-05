@@ -186,5 +186,53 @@ export const INITIAL_IBANI_SONGS = [
     lyrics: [
       { ibani: 'Bonny Nwantan wa kuro bo, biri so', english: 'Bringing rhythm and joy to the people' },
     ]
+  },
+  {
+    id: 'cookey-gam-ukonu-wariapu-wa-ti',
+    youtubeId: 'd_mgJAiEw1w',
+    title: 'Ukonu Wariapu Wa Ti Bie Gbom',
+    artist: 'Amanimigbo Rosetta Ilanye George Cookey-Gam',
+    category: 'Opobo Heritage',
+    year: '2025',
+    duration: '12:44',
+    lyrics: [
+      { ibani: 'Ukonu wariapu wa ti bie gbom', english: 'The household of Ukonu gathers with joyful hearts' }
+    ]
+  },
+  {
+    id: 'cookey-gam-governor-siminialayi',
+    youtubeId: 'NBWSQAhzW40',
+    title: 'Governor Siminialayi Bo',
+    artist: 'Amanimigbo Rosetta Ilanye George Cookey-Gam',
+    category: 'Ibani Praise',
+    year: '2025',
+    duration: '14:16',
+    lyrics: [
+      { ibani: 'Governor Siminialayi bo, wa soni ye', english: 'Governor Siminialayi has arrived, our noble son' }
+    ]
+  },
+  {
+    id: 'cookey-gam-kiri-pele-ma',
+    youtubeId: 'P6aLnQZL4jU',
+    title: 'Kiri Pele Ma Oju La Mie',
+    artist: 'Amanimigbo Rosetta Ilanye George Cookey-Gam',
+    category: 'Ibani Folklore',
+    year: '2025',
+    duration: '17:14',
+    lyrics: [
+      { ibani: 'Kiri pele ma oju la mie, wa fite', english: 'Across the lands and waters, our heritage shines' }
+    ]
+  },
+  {
+    id: 'cookey-gam-belem-tamuno',
+    youtubeId: 'LKt3wSGGrNA',
+    title: 'Ukonu Wariapu Wa Bie Belem Tamuno',
+    artist: 'Amanimigbo Rosetta Ilanye George Cookey-Gam',
+    category: 'Devotional & Folk',
+    year: '2025',
+    duration: '24:17',
+    lyrics: [
+      { ibani: 'Ukonu wariapu wa bie belem Tamuno', english: 'The household of Ukonu gives sweet praise to the Almighty' }
+    ]
   }
 ];
