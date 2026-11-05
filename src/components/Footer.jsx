@@ -6,7 +6,11 @@ export default function Footer() {
     <footer className="site-footer">
       <div className="container footer-bottom-container">
         <div className="footer-brand">
-          <Music size={16} />
+          <img 
+            src="/logo.jpg" 
+            alt="Ibani Music Logo" 
+            className="footer-logo-img" 
+          />
           <span>Ibani Music</span>
         </div>
         <p>&copy; {new Date().getFullYear()} Ibani Indigenous Music Videos</p>

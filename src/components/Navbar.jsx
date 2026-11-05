@@ -7,7 +7,11 @@ export default function Navbar() {
       <div className="container nav-container">
         <a href="#home" className="brand">
           <div className="brand-badge">
-            <Music size={20} />
+            <img 
+              src="/logo.jpg" 
+              alt="Ibani Music Logo" 
+              className="brand-logo-img" 
+            />
           </div>
           <div className="brand-text">
             <span className="brand-title">Ibani Music</span>
