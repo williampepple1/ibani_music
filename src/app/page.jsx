@@ -69,8 +69,7 @@ export default function Home() {
           <div className="container">
             <h1 className="simple-intro-title">Ịbạnị Nume &mdash; Ibani Songs</h1>
             <p className="simple-intro-desc">
-              <em>Nume</em> means <strong>song</strong> in the indigenous Ibani language. 
-              Enjoy traditional folklore, rhythms, and cultural music from the Niger Delta.
+              Enjoy Ibani nume, traditional folklore, rhythms, and cultural music of the Ibani people from the Niger Delta.
             </p>
           </div>
         </header>
