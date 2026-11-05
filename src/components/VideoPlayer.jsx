@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { 
   Maximize2, 
   Minimize2, 
@@ -26,11 +26,49 @@ export default function VideoPlayer({
   const [theaterMode, setTheaterMode] = useState(false);
   const [showLyrics, setShowLyrics] = useState(false);
   const [copied, setCopied] = useState(false);
-  
-  // Unmuted with sound by default
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const iframeRef = useRef(null);
 
   if (!currentSong) return null;
+
+  // Send control commands to YouTube iframe via postMessage
+  const sendYouTubeCommand = (func, args = '') => {
+    try {
+      if (iframeRef.current && iframeRef.current.contentWindow) {
+        iframeRef.current.contentWindow.postMessage(
+          JSON.stringify({ event: 'command', func, args }),
+          '*'
+        );
+      }
+    } catch (e) {
+      console.warn('YouTube postMessage error:', e);
+    }
+  };
+
+  const handleUnmute = () => {
+    setIsMuted(false);
+    sendYouTubeCommand('unMute');
+    sendYouTubeCommand('setVolume', [100]);
+  };
+
+  const handleMute = () => {
+    setIsMuted(true);
+    sendYouTubeCommand('mute');
+  };
+
+  // Optional: Listen for any user gesture on document to automatically unmute
+  useEffect(() => {
+    const handleFirstInteraction = () => {
+      if (isMuted) {
+        handleUnmute();
+      }
+    };
+
+    window.addEventListener('click', handleFirstInteraction, { once: true });
+    return () => {
+      window.removeEventListener('click', handleFirstInteraction);
+    };
+  }, [isMuted]);
 
   const embedUrl = getYouTubeEmbedUrl(currentSong.youtubeId, true, isMuted);
   const youtubeWatchUrl = `https://www.youtube.com/watch?v=${currentSong.youtubeId}`;
@@ -45,12 +83,13 @@ export default function VideoPlayer({
 
   return (
     <section className={`player-section ${theaterMode ? 'theater-mode' : ''}`} id="player-view">
-      <div className="player-container">
+      <div className="container player-container">
         {/* Main Video Screen */}
         <div className="video-viewport-wrapper">
           <div className="video-viewport">
             <iframe
-              key={`${currentSong.youtubeId}-${isMuted}`}
+              ref={iframeRef}
+              key={currentSong.youtubeId}
               src={embedUrl}
               title={currentSong.title}
               className="youtube-iframe"
@@ -99,16 +138,28 @@ export default function VideoPlayer({
             </div>
 
             <div className="player-view-controls">
-              {/* Volume Toggle */}
-              <button
-                type="button"
-                className="btn btn-icon"
-                onClick={() => setIsMuted(!isMuted)}
-                title={isMuted ? "Unmute audio" : "Mute audio"}
-                aria-label={isMuted ? "Unmute audio" : "Mute audio"}
-              >
-                {isMuted ? <VolumeX size={17} /> : <Volume2 size={17} />}
-              </button>
+              {/* Unmute / Volume Action */}
+              {isMuted ? (
+                <button
+                  type="button"
+                  className="btn btn-unmute-prompt"
+                  onClick={handleUnmute}
+                  title="Click to enable sound"
+                >
+                  <VolumeX size={16} />
+                  <span>Tap to Unmute Audio</span>
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="btn btn-icon"
+                  onClick={handleMute}
+                  title="Mute video"
+                  aria-label="Mute video"
+                >
+                  <Volume2 size={16} />
+                </button>
+              )}
 
               {hasLyrics && (
                 <button

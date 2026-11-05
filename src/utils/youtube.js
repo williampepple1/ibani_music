@@ -40,18 +40,22 @@ export function getYouTubeThumbnail(videoId) {
   return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
 }
 
-export function getYouTubeEmbedUrl(videoId, autoplay = true, isMuted = false) {
+export function getYouTubeEmbedUrl(videoId, autoplay = true, isMuted = true) {
   if (!videoId) return '';
   const params = new URLSearchParams({
     rel: '0',
     modestbranding: '1',
-    enablejsapi: '1'
+    enablejsapi: '1',
+    playsinline: '1'
   });
+  
   if (autoplay) {
     params.set('autoplay', '1');
   }
+  
   if (isMuted) {
     params.set('mute', '1');
   }
+  
   return `https://www.youtube.com/embed/${videoId}?${params.toString()}`;
 }
