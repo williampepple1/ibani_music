@@ -112,7 +112,7 @@ export default function VideoPlayer({
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onStartPlayback(); }}
-                aria-label="Click anywhere to play video with sound"
+                aria-label="Play video"
               >
                 <img 
                   src={getYouTubeThumbnail(currentSong.youtubeId)} 
@@ -128,16 +128,11 @@ export default function VideoPlayer({
                       e.stopPropagation();
                       if (onStartPlayback) onStartPlayback();
                     }}
-                    aria-label="Play song with sound"
+                    aria-label="Play song"
                   >
                     <Play size={36} fill="currentColor" />
                   </button>
-                  <span className="video-overlay-badge">Random Video Loaded</span>
                   <h2 className="video-overlay-song-title">{currentSong.title}</h2>
-                  <p className="video-overlay-prompt">
-                    <Volume2 size={16} />
-                    <span>Click anywhere to play with sound</span>
-                  </p>
                 </div>
               </div>
             )}
