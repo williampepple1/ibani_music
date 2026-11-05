@@ -62,3 +62,4 @@ export default function Hero({ onStartListening, onExploreLanguage, songCount })
     </section>
   );
 }
+

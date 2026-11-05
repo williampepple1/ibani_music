@@ -52,3 +52,4 @@ export function getYouTubeEmbedUrl(videoId, autoplay = false) {
   }
   return `https://www.youtube-nocookie.com/embed/${videoId}?${params.toString()}`;
 }
+

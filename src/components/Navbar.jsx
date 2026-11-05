@@ -77,3 +77,4 @@ export default function Navbar({ onOpenAddModal, theme, onToggleTheme, activeTab
     </header>
   );
 }
+
