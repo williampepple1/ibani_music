@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import VideoPlayer from './components/VideoPlayer';
 import VideoGrid from './components/VideoGrid';
@@ -8,13 +8,8 @@ import { INITIAL_IBANI_SONGS } from './data/ibaniSongs';
 import './App.css';
 
 const STORAGE_KEY_CUSTOM_SONGS = 'ibani_custom_songs_v1';
-const STORAGE_KEY_THEME = 'ibani_theme_v2';
 
 export default function App() {
-  const [theme, setTheme] = useState(() => {
-    return localStorage.getItem(STORAGE_KEY_THEME) || 'minimal';
-  });
-
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   const [songs, setSongs] = useState(() => {
@@ -30,12 +25,12 @@ export default function App() {
     return INITIAL_IBANI_SONGS;
   });
 
-  // Pick a random song to automatically play on initial site load
+  // Pick a random song to automatically play when the webpage opens
   const [currentSongId, setCurrentSongId] = useState(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY_CUSTOM_SONGS);
       const all = stored ? [...JSON.parse(stored), ...INITIAL_IBANI_SONGS] : INITIAL_IBANI_SONGS;
-      if (all.length > 0) {
+      if (all && all.length > 0) {
         const randIdx = Math.floor(Math.random() * all.length);
         return all[randIdx]?.id || all[0]?.id;
       }
@@ -44,11 +39,6 @@ export default function App() {
     }
     return INITIAL_IBANI_SONGS[0]?.id || '';
   });
-
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem(STORAGE_KEY_THEME, theme);
-  }, [theme]);
 
   const currentSong = songs.find(s => s.id === currentSongId) || songs[0];
   const currentIndex = songs.findIndex(s => s.id === currentSongId);
@@ -119,11 +109,7 @@ export default function App() {
 
   return (
     <div className="app-layout">
-      <Navbar
-        onOpenAddModal={() => setIsAddModalOpen(true)}
-        theme={theme}
-        onChangeTheme={setTheme}
-      />
+      <Navbar onOpenAddModal={() => setIsAddModalOpen(true)} />
 
       <main className="main-content" id="home">
         <header className="simple-intro-header">
@@ -131,7 +117,7 @@ export default function App() {
             <h1 className="simple-intro-title">Ịbạnị Nume &mdash; Ibani Songs</h1>
             <p className="simple-intro-desc">
               <em>Nume</em> means <strong>song</strong> in the indigenous Ibani language. 
-              Explore traditional folk recordings, rhythms, and cultural music from the Niger Delta.
+              Enjoy traditional folklore, rhythms, and cultural music from the Niger Delta.
             </p>
           </div>
         </header>

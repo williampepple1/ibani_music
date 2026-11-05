@@ -40,7 +40,7 @@ export function getYouTubeThumbnail(videoId) {
   return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
 }
 
-export function getYouTubeEmbedUrl(videoId, autoplay = false) {
+export function getYouTubeEmbedUrl(videoId, autoplay = true, isMuted = false) {
   if (!videoId) return '';
   const params = new URLSearchParams({
     rel: '0',
@@ -50,6 +50,8 @@ export function getYouTubeEmbedUrl(videoId, autoplay = false) {
   if (autoplay) {
     params.set('autoplay', '1');
   }
-  return `https://www.youtube-nocookie.com/embed/${videoId}?${params.toString()}`;
+  if (isMuted) {
+    params.set('mute', '1');
+  }
+  return `https://www.youtube.com/embed/${videoId}?${params.toString()}`;
 }
-

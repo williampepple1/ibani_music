@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Maximize2, 
   Minimize2, 
@@ -7,9 +7,11 @@ import {
   Shuffle, 
   ExternalLink, 
   Check, 
-  Share2,
-  Tag,
-  Music
+  Share2, 
+  Tag, 
+  Music,
+  Volume2,
+  VolumeX
 } from 'lucide-react';
 import { getYouTubeEmbedUrl } from '../utils/youtube';
 
@@ -17,23 +19,41 @@ export default function VideoPlayer({
   currentSong, 
   onNext, 
   onPrev, 
-  onShuffle,
-  totalSongs,
+  onShuffle, 
+  totalSongs, 
   currentIndex 
 }) {
   const [theaterMode, setTheaterMode] = useState(false);
   const [showLyrics, setShowLyrics] = useState(false);
   const [copied, setCopied] = useState(false);
+  
+  // Browsers require autoplaying media to be muted on initial cold load
+  const [isMuted, setIsMuted] = useState(true);
 
   if (!currentSong) return null;
 
-  const embedUrl = getYouTubeEmbedUrl(currentSong.youtubeId, true);
+  const embedUrl = getYouTubeEmbedUrl(currentSong.youtubeId, true, isMuted);
   const youtubeWatchUrl = `https://www.youtube.com/watch?v=${currentSong.youtubeId}`;
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(youtubeWatchUrl);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleNextWithSound = () => {
+    setIsMuted(false); // User interacted, safe to play with sound
+    onNext();
+  };
+
+  const handlePrevWithSound = () => {
+    setIsMuted(false);
+    onPrev();
+  };
+
+  const handleShuffleWithSound = () => {
+    setIsMuted(false);
+    onShuffle();
   };
 
   const hasLyrics = currentSong.lyrics && currentSong.lyrics.length > 0;
@@ -45,12 +65,12 @@ export default function VideoPlayer({
         <div className="video-viewport-wrapper">
           <div className="video-viewport">
             <iframe
+              key={`${currentSong.youtubeId}-${isMuted}`}
               src={embedUrl}
               title={currentSong.title}
               className="youtube-iframe"
               width="1280"
               height="720"
-              loading="lazy"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
             />
@@ -61,7 +81,7 @@ export default function VideoPlayer({
               <button
                 type="button"
                 className="btn btn-icon"
-                onClick={onPrev}
+                onClick={handlePrevWithSound}
                 title="Previous video"
                 aria-label="Previous video"
               >
@@ -71,7 +91,7 @@ export default function VideoPlayer({
               <button
                 type="button"
                 className="btn btn-icon"
-                onClick={onNext}
+                onClick={handleNextWithSound}
                 title="Next video"
                 aria-label="Next video"
               >
@@ -81,9 +101,9 @@ export default function VideoPlayer({
               <button
                 type="button"
                 className="btn btn-icon"
-                onClick={onShuffle}
-                title="Shuffle"
-                aria-label="Shuffle"
+                onClick={handleShuffleWithSound}
+                title="Shuffle video"
+                aria-label="Shuffle video"
               >
                 <Shuffle size={17} />
               </button>
@@ -94,6 +114,29 @@ export default function VideoPlayer({
             </div>
 
             <div className="player-view-controls">
+              {/* Unmute / Mute Toggle */}
+              {isMuted ? (
+                <button
+                  type="button"
+                  className="btn btn-unmute-prompt"
+                  onClick={() => setIsMuted(false)}
+                  title="Click to unmute video"
+                >
+                  <VolumeX size={16} />
+                  <span>Unmute Audio</span>
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="btn btn-icon"
+                  onClick={() => setIsMuted(true)}
+                  title="Mute video"
+                  aria-label="Mute video"
+                >
+                  <Volume2 size={16} />
+                </button>
+              )}
+
               {hasLyrics && (
                 <button
                   type="button"
@@ -154,7 +197,7 @@ export default function VideoPlayer({
           <h1 className="meta-song-title">{currentSong.title}</h1>
           <h2 className="meta-artist-name">{currentSong.artist}</h2>
 
-          {/* Simple Lyrics toggle (only shown when requested) */}
+          {/* Simple Lyrics Box */}
           {hasLyrics && showLyrics && (
             <div className="simple-lyrics-box">
               <div className="lyrics-lines">
