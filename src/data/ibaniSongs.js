@@ -510,5 +510,149 @@ export const INITIAL_IBANI_SONGS = [
     lyrics: [
       { ibani: 'O ti se wa so, Tamuno bo', english: 'Closing vocal chant and blessing' }
     ]
+  },
+  {
+    id: 'lily-club-bonny-pt3',
+    youtubeId: 'ieN3Z5hz-yE',
+    title: 'Lily Club International (Part 3)',
+    artist: 'Lily Cultural Club (Grand Bonny)',
+    category: 'Bonny Heritage',
+    year: 'Classic',
+    duration: '18:56',
+    lyrics: [
+      { ibani: 'Lily Club International, wa polo bu koroma', english: 'Concluding the celebrated Lily Club folklore series' }
+    ]
+  },
+  {
+    id: 'you-work-you-chop-bonny',
+    youtubeId: 'HZrjeWsVzFw',
+    title: 'You Work You Chop Cultural Club of Grand Bonny',
+    artist: 'You Work You Chop Cultural Society',
+    category: 'Bonny Heritage',
+    year: 'Live',
+    duration: '17:21',
+    lyrics: [
+      { ibani: 'Grand Bonny biri so, wa seghi kuro', english: 'Rhythmic drumbeats and chants from the ancestral island' }
+    ]
+  },
+  {
+    id: 'allison-house-owu-ogbo',
+    youtubeId: 'MbfPGLBxDg8',
+    title: 'Allison House Owu-Ogbo (Ogbokoroma)',
+    artist: 'Allison Chieftaincy House Owu-Ogbo',
+    category: 'Masquerade & Folk',
+    year: 'Live',
+    duration: '14:59',
+    lyrics: [
+      { ibani: 'Ogbokoroma Owu-Ogbo, Allison wari kuro', english: 'Ancient water spirit masquerade drumming of Allison House' }
+    ]
+  },
+  {
+    id: 'ugele-mkpa-nwaotam-live-session',
+    youtubeId: 'eukGcR_E43k',
+    title: 'Uke Songs – Ugelemkpa Nwaotam Live Session',
+    artist: 'Ugele Mkpa Nwaotam Guild',
+    category: 'Masquerade & Folk',
+    year: 'Live',
+    duration: '124:34',
+    lyrics: [
+      { ibani: 'Uke nume so, Nwaotam kuro bo', english: 'Epic live masquerade chants, bells, and sacred drums' }
+    ]
+  },
+  {
+    id: 'ibani-praise-session-finima',
+    youtubeId: 'lwALG5l422Q',
+    title: 'Ibani Praise Session (Finima)',
+    artist: "St. Patrick's Anglican Church Choir, Finima",
+    category: 'Ibani Devotional',
+    year: '2024',
+    duration: '15:12',
+    lyrics: [
+      { ibani: 'Tamuno wa fite ye, wa gbom bo', english: 'Joyous Ibani hymns and thanksgiving praise from Finima' }
+    ]
+  },
+  {
+    id: 'abara-dance-grand-bonny',
+    youtubeId: 'aCT13HDUaaU',
+    title: 'Abara International Cultural Dance',
+    artist: 'Abara Women Cultural Troupe',
+    category: 'Cultural Dance',
+    year: 'Live',
+    duration: '5:18',
+    lyrics: [
+      { ibani: 'Abara wa seghi bo, wa polo bu', english: 'Graceful ancestral women dance steps and songs of Bonny' }
+    ]
+  },
+  {
+    id: 'opobo-nwaotam-festival-music',
+    youtubeId: 'aL0HHfvb5lc',
+    title: 'Opobo Nwaotam Festival Music',
+    artist: 'Opobo Nwaotam Society',
+    category: 'Masquerade & Folk',
+    year: 'Live',
+    duration: '5:41',
+    lyrics: [
+      { ibani: 'Nwaotam Opubo biri, wa soni ye', english: 'Celebrated festival beats and rooftop masquerade music of Opobo' }
+    ]
+  },
+  {
+    id: 'ama-satii-dance-group-opobo',
+    youtubeId: '_t0yYmCpuW8',
+    title: 'Ama-Satii Cultural Dance Group',
+    artist: 'Ama-Satii Cultural Guild (Opobo)',
+    category: 'Cultural Dance',
+    year: 'Live',
+    duration: '3:31',
+    lyrics: [
+      { ibani: 'Ama-Satii wa koroma se, Opobo biri', english: 'Community cultural rhythms and traditional waist dance' }
+    ]
+  },
+  {
+    id: 'opobo-lee-seghi-live-performance',
+    youtubeId: 'cNLyAhLROlQ',
+    title: 'Opobo Lẹé Seghi Ogbo Cultural Performance',
+    artist: 'Lẹé Seghi Ogbo',
+    category: 'Cultural Dance',
+    year: 'Live',
+    duration: '2:43',
+    lyrics: [
+      { ibani: 'Lẹé seghi ogbo, wa seghi koroma', english: 'Full stage cultural display and Ibani folklore song' }
+    ]
+  },
+  {
+    id: 'owu-sara-hart-house-bonny',
+    youtubeId: '0EV-2_JBlSY',
+    title: 'Bonny Owu-Sara Cultural Display',
+    artist: 'Hart House Owu-Ogbo (Grand Bonny)',
+    category: 'Masquerade & Folk',
+    year: 'Live',
+    duration: '3:00',
+    lyrics: [
+      { ibani: 'Hart House Owu-Sara, biri wa kuro', english: 'Traditional masquerade festival music of Hart House' }
+    ]
+  },
+  {
+    id: 'opobo-boat-regatta-song-cookey-gam',
+    youtubeId: '2zUNTd2Aiks',
+    title: 'Opobo Boat Regatta Song',
+    artist: 'Amanimibo Rosetta Ilanye Ogboaya George Cookey-Gam',
+    category: 'Opobo Heritage',
+    year: 'Classic',
+    duration: '1:10',
+    lyrics: [
+      { ibani: 'Wa fite awo, wa regatta se', english: 'Vibrant paddle rhythms and royal boat regatta chant' }
+    ]
+  },
+  {
+    id: 'tamuno-bo-james-numbere',
+    youtubeId: 'nhta-hYCXJQ',
+    title: 'Tamuno Bo (God Has Come)',
+    artist: 'James Numbere ft. Sensational Bamidele',
+    category: 'Ibani Devotional',
+    year: '2023',
+    duration: '4:17',
+    lyrics: [
+      { ibani: 'Tamuno bo, wa kuro bo', english: 'God has arrived with mercy and strength for His people' }
+    ]
   }
 ];
