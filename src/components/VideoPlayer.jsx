@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { 
   Maximize2, 
   Minimize2, 
@@ -11,9 +11,10 @@ import {
   Tag, 
   Music,
   Volume2,
-  VolumeX
+  VolumeX,
+  Play
 } from 'lucide-react';
-import { getYouTubeEmbedUrl } from '../utils/youtube';
+import { getYouTubeEmbedUrl, getYouTubeThumbnail } from '../utils/youtube';
 
 export default function VideoPlayer({ 
   currentSong, 
@@ -21,7 +22,9 @@ export default function VideoPlayer({
   onPrev, 
   onShuffle, 
   totalSongs, 
-  currentIndex 
+  currentIndex,
+  hasStarted = false,
+  onStartPlayback
 }) {
   const [theaterMode, setTheaterMode] = useState(false);
   const [showLyrics, setShowLyrics] = useState(false);
@@ -30,6 +33,22 @@ export default function VideoPlayer({
   // Unmuted by default: mute=0
   const [isMuted, setIsMuted] = useState(false);
   const iframeRef = useRef(null);
+
+  // Allow any click anywhere on the page to trigger unmuted playback
+  useEffect(() => {
+    if (hasStarted) return;
+
+    const handleGlobalFirstClick = () => {
+      if (onStartPlayback) {
+        onStartPlayback();
+      }
+    };
+
+    window.addEventListener('click', handleGlobalFirstClick, { once: true });
+    return () => {
+      window.removeEventListener('click', handleGlobalFirstClick);
+    };
+  }, [hasStarted, onStartPlayback]);
 
   if (!currentSong) return null;
 
@@ -74,17 +93,54 @@ export default function VideoPlayer({
         {/* Main Video Screen */}
         <div className="video-viewport-wrapper">
           <div className="video-viewport">
-            <iframe
-              ref={iframeRef}
-              key={currentSong.youtubeId}
-              src={embedUrl}
-              title={currentSong.title}
-              className="youtube-iframe"
-              width="1280"
-              height="720"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            />
+            {hasStarted ? (
+              <iframe
+                ref={iframeRef}
+                key={currentSong.youtubeId}
+                src={embedUrl}
+                title={currentSong.title}
+                className="youtube-iframe"
+                width="1280"
+                height="720"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            ) : (
+              <div 
+                className="video-start-overlay" 
+                onClick={onStartPlayback}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onStartPlayback(); }}
+                aria-label="Click anywhere to play video with sound"
+              >
+                <img 
+                  src={getYouTubeThumbnail(currentSong.youtubeId)} 
+                  alt={currentSong.title}
+                  className="video-overlay-thumb" 
+                />
+                <div className="video-overlay-backdrop" />
+                <div className="video-overlay-content">
+                  <button 
+                    type="button" 
+                    className="video-overlay-play-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (onStartPlayback) onStartPlayback();
+                    }}
+                    aria-label="Play song with sound"
+                  >
+                    <Play size={36} fill="currentColor" />
+                  </button>
+                  <span className="video-overlay-badge">Random Video Loaded</span>
+                  <h2 className="video-overlay-song-title">{currentSong.title}</h2>
+                  <p className="video-overlay-prompt">
+                    <Volume2 size={16} />
+                    <span>Click anywhere to play with sound</span>
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="player-quick-bar">

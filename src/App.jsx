@@ -8,6 +8,7 @@ import './App.css';
 
 export default function App() {
   const songs = INITIAL_IBANI_SONGS;
+  const [hasStarted, setHasStarted] = useState(false);
 
   // Pick a random song to automatically play when the webpage opens
   const [currentSongId, setCurrentSongId] = useState(() => {
@@ -21,7 +22,12 @@ export default function App() {
   const currentSong = songs.find(s => s.id === currentSongId) || songs[0];
   const currentIndex = songs.findIndex(s => s.id === currentSongId);
 
+  const handleStartPlayback = () => {
+    setHasStarted(true);
+  };
+
   const handleSelectSong = (song) => {
+    setHasStarted(true);
     setCurrentSongId(song.id);
     const playerEl = document.getElementById('player-view');
     if (playerEl) {
@@ -30,18 +36,21 @@ export default function App() {
   };
 
   const handleNext = () => {
+    setHasStarted(true);
     if (songs.length <= 1) return;
     const nextIdx = (currentIndex + 1) % songs.length;
     setCurrentSongId(songs[nextIdx].id);
   };
 
   const handlePrev = () => {
+    setHasStarted(true);
     if (songs.length <= 1) return;
     const prevIdx = (currentIndex - 1 + songs.length) % songs.length;
     setCurrentSongId(songs[prevIdx].id);
   };
 
   const handleShuffle = () => {
+    setHasStarted(true);
     if (songs.length <= 1) return;
     let randIdx = Math.floor(Math.random() * songs.length);
     if (randIdx === currentIndex) {
@@ -69,6 +78,8 @@ export default function App() {
           currentSong={currentSong}
           currentIndex={currentIndex >= 0 ? currentIndex : 0}
           totalSongs={songs.length}
+          hasStarted={hasStarted}
+          onStartPlayback={handleStartPlayback}
           onNext={handleNext}
           onPrev={handlePrev}
           onShuffle={handleShuffle}
