@@ -342,5 +342,173 @@ export const INITIAL_IBANI_SONGS = [
     lyrics: [
       { ibani: 'Lẹé seghi ogbo, wa seghi koroma', english: 'Graceful Ibani cultural dance and songs of Opobo' }
     ]
+  },
+  {
+    id: 'iri-say-wa-bomam',
+    youtubeId: 'SvYnAW6Qf4I',
+    title: 'Wa Bomam',
+    artist: 'Iri Say (feat. Mrs. Augusta Obuibim Wilfred & Mr. Adolphus Jumbo)',
+    category: 'Bonny Heritage',
+    year: 'Traditional',
+    duration: '2:58',
+    lyrics: [
+      { ibani: 'Wa bomam, Ibani biri so', english: 'Our pride and cultural sound' }
+    ]
+  },
+  {
+    id: 'iri-say-ida-lilli',
+    youtubeId: 'qNDx4yU3RZ0',
+    title: 'Ida Lilli',
+    artist: 'Iri Say (feat. Mrs. Augusta Obuibim Wilfred & Mr. Adolphus Jumbo)',
+    category: 'Bonny Heritage',
+    year: 'Traditional',
+    duration: '2:38',
+    lyrics: [
+      { ibani: 'Ida lilli, wa polo bu koroma', english: 'Joyful traditional melodies of Grand Bonny' }
+    ]
+  },
+  {
+    id: 'iri-say-aboro-ibara-te-bi-mo',
+    youtubeId: 'zlPaWGoFLFo',
+    title: 'Aboro Ibara Te Bi Mo',
+    artist: 'Iri Say (feat. Mrs. Augusta Obuibim Wilfred & Mr. Adolphus Jumbo)',
+    category: 'Bonny Heritage',
+    year: 'Traditional',
+    duration: '3:59',
+    lyrics: [
+      { ibani: 'Aboro ibara te bi mo, wa fite ye', english: 'Celebrating our ancient heritage and lineage' }
+    ]
+  },
+  {
+    id: 'iri-say-wa-wa-abagi-foru',
+    youtubeId: 'pM7_nNW-9yg',
+    title: 'Wa Wa Abagi Foru',
+    artist: 'Iri Say (feat. Mrs. Augusta Obuibim Wilfred & Mr. Adolphus Jumbo)',
+    category: 'Bonny Heritage',
+    year: 'Traditional',
+    duration: '3:22',
+    lyrics: [
+      { ibani: 'Wa wa abagi foru, kuro nyana', english: 'Strong rhythms and voices of the Ibani elders' }
+    ]
+  },
+  {
+    id: 'iri-say-shelli-compini',
+    youtubeId: 'iHAMhQBwuqY',
+    title: 'Shelli Compini',
+    artist: 'Iri Say (feat. Mrs. Augusta Wilfred, Mr. Adolphus Jumbo & Mr. Gift Tobin)',
+    category: 'Bonny Heritage',
+    year: 'Traditional',
+    duration: '3:12',
+    lyrics: [
+      { ibani: 'Shelli compini, wa seghi koroma', english: 'Historical guild dance and melodies' }
+    ]
+  },
+  {
+    id: 'iri-say-wari-ala-ma-na-bo',
+    youtubeId: 'TqUrADnq2cM',
+    title: 'Wari Ala Ma Na Bo',
+    artist: 'Iri Say (feat. Mrs. Augusta Wilfred, Mr. Adolphus Jumbo & Mrs. Sopriala Omieba)',
+    category: 'Bonny Heritage',
+    year: 'Traditional',
+    duration: '3:10',
+    lyrics: [
+      { ibani: 'Wari ala ma na bo, wa soni ye', english: 'Honoring the chiefs and houses of the kingdom' }
+    ]
+  },
+  {
+    id: 'iri-say-o-ti-se-wa-so',
+    youtubeId: '4TELAC7hlaI',
+    title: 'O Ti Se Wa So',
+    artist: 'Iri Say (feat. Mrs. Augusta Wilfred, Mr. Adolphus Jumbo & Mr. Christian Tobin)',
+    category: 'Bonny Heritage',
+    year: 'Traditional',
+    duration: '2:40',
+    lyrics: [
+      { ibani: 'O ti se wa so, Ibani biri', english: 'The time has arrived for our culture to resound' }
+    ]
+  },
+  {
+    id: 'iri-say-wa-bo-mam-acapella',
+    youtubeId: 'dqMXr_swZDg',
+    title: 'Wa Bo Mam (Acapella)',
+    artist: 'Iri Say (feat. Mrs. Augusta Obuibim Wilfred & Mr. Adolphus Jumbo)',
+    category: 'Acapella Folk',
+    year: 'Traditional',
+    duration: '2:58',
+    lyrics: [
+      { ibani: 'Wa bo mam, wa nume koroma', english: 'Pure harmonious voices of Ibani elders' }
+    ]
+  },
+  {
+    id: 'iri-say-ida-lili-acapella',
+    youtubeId: 'og4tUvU5JSo',
+    title: 'Ida Lili (Acapella)',
+    artist: 'Iri Say (feat. Mrs. Augusta Obuibim Wilfred & Mr. Adolphus Jumbo)',
+    category: 'Acapella Folk',
+    year: 'Traditional',
+    duration: '2:38',
+    lyrics: [
+      { ibani: 'Ida lili, belem nume', english: 'Sweet acoustic vocal harmony' }
+    ]
+  },
+  {
+    id: 'iri-say-aboro-ibara-acapella',
+    youtubeId: 'hpLnF3Cfw6Q',
+    title: 'Aboro Ibara Te Bi Mo (Acapella)',
+    artist: 'Iri Say (feat. Mrs. Augusta Obuibim Wilfred & Mr. Adolphus Jumbo)',
+    category: 'Acapella Folk',
+    year: 'Traditional',
+    duration: '2:49',
+    lyrics: [
+      { ibani: 'Aboro ibara te bi mo, wa fite', english: 'Unaccompanied traditional vocal chant' }
+    ]
+  },
+  {
+    id: 'iri-say-wa-wa-abagi-acapella',
+    youtubeId: '8GZn-UX6vrc',
+    title: 'Wa Wa Abagi Foru (Acapella)',
+    artist: 'Iri Say (feat. Mrs. Augusta Obuibim Wilfred & Mr. Adolphus Jumbo)',
+    category: 'Acapella Folk',
+    year: 'Traditional',
+    duration: '3:22',
+    lyrics: [
+      { ibani: 'Wa wa abagi foru, wa biri so', english: 'Rich resonant voices in folk harmony' }
+    ]
+  },
+  {
+    id: 'iri-say-shelli-compini-acapella',
+    youtubeId: '-9FrBTodw2E',
+    title: 'Shelli Compini (Acapella)',
+    artist: 'Iri Say (feat. Mrs. Augusta Wilfred, Mr. Adolphus Jumbo & Mr. Gift Tobin)',
+    category: 'Acapella Folk',
+    year: 'Traditional',
+    duration: '3:12',
+    lyrics: [
+      { ibani: 'Shelli compini, wa nume kuro', english: 'Choral acoustic arrangement' }
+    ]
+  },
+  {
+    id: 'iri-say-wari-ala-acapella',
+    youtubeId: 'zxfzyhhUoFs',
+    title: 'Wa Ri Ala Ma Na Bo (Acapella)',
+    artist: 'Iri Say (feat. Mrs. Augusta Obuibim Wilfred & Mr. Adolphus Jumbo)',
+    category: 'Acapella Folk',
+    year: 'Traditional',
+    duration: '3:10',
+    lyrics: [
+      { ibani: 'Wa ri ala ma na bo, wa polo bu', english: 'Solemn royal house praise in harmony' }
+    ]
+  },
+  {
+    id: 'iri-say-o-ti-se-wa-so-acapella',
+    youtubeId: '46i2TLYxJAg',
+    title: 'O Ti Se Wa So (Acapella)',
+    artist: 'Iri Say (feat. Mrs. Augusta Wilfred, Mr. Adolphus Jumbo & Mr. Christian Tobin)',
+    category: 'Acapella Folk',
+    year: 'Traditional',
+    duration: '2:58',
+    lyrics: [
+      { ibani: 'O ti se wa so, Tamuno bo', english: 'Closing vocal chant and blessing' }
+    ]
   }
 ];
