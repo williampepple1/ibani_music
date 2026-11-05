@@ -1,23 +1,24 @@
-import React, { useState } from 'react';
-import Navbar from './components/Navbar';
-import VideoPlayer from './components/VideoPlayer';
-import VideoGrid from './components/VideoGrid';
-import Footer from './components/Footer';
-import { INITIAL_IBANI_SONGS } from './data/ibaniSongs';
-import './App.css';
+'use client';
 
-export default function App() {
+import React, { useState, useEffect } from 'react';
+import Navbar from '../components/Navbar';
+import VideoPlayer from '../components/VideoPlayer';
+import VideoGrid from '../components/VideoGrid';
+import Footer from '../components/Footer';
+import { INITIAL_IBANI_SONGS } from '../data/ibaniSongs';
+
+export default function Home() {
   const songs = INITIAL_IBANI_SONGS;
   const [hasStarted, setHasStarted] = useState(false);
+  const [currentSongId, setCurrentSongId] = useState(INITIAL_IBANI_SONGS[0]?.id || '');
 
-  // Pick a random song to automatically play when the webpage opens
-  const [currentSongId, setCurrentSongId] = useState(() => {
+  // Select a random song upon page load
+  useEffect(() => {
     if (INITIAL_IBANI_SONGS.length > 0) {
       const randIdx = Math.floor(Math.random() * INITIAL_IBANI_SONGS.length);
-      return INITIAL_IBANI_SONGS[randIdx]?.id || INITIAL_IBANI_SONGS[0]?.id;
+      setCurrentSongId(INITIAL_IBANI_SONGS[randIdx]?.id || INITIAL_IBANI_SONGS[0]?.id);
     }
-    return '';
-  });
+  }, []);
 
   const currentSong = songs.find(s => s.id === currentSongId) || songs[0];
   const currentIndex = songs.findIndex(s => s.id === currentSongId);
