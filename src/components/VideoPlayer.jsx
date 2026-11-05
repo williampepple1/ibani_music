@@ -173,35 +173,37 @@ export default function VideoPlayer({
 
           <div className="player-quick-bar">
             <div className="player-nav-controls">
-              <button
-                type="button"
-                className="btn btn-icon"
-                onClick={onPrev}
-                title="Previous video"
-                aria-label="Previous video"
-              >
-                <SkipBack size={18} />
-              </button>
+              <div className="nav-btn-cluster">
+                <button
+                  type="button"
+                  className="btn btn-icon"
+                  onClick={onPrev}
+                  title="Previous video"
+                  aria-label="Previous video"
+                >
+                  <SkipBack size={18} />
+                </button>
 
-              <button
-                type="button"
-                className="btn btn-icon"
-                onClick={onNext}
-                title="Next video"
-                aria-label="Next video"
-              >
-                <SkipForward size={18} />
-              </button>
+                <button
+                  type="button"
+                  className="btn btn-icon"
+                  onClick={onNext}
+                  title="Next video"
+                  aria-label="Next video"
+                >
+                  <SkipForward size={18} />
+                </button>
 
-              <button
-                type="button"
-                className="btn btn-icon"
-                onClick={onShuffle}
-                title="Shuffle video"
-                aria-label="Shuffle video"
-              >
-                <Shuffle size={17} />
-              </button>
+                <button
+                  type="button"
+                  className="btn btn-icon"
+                  onClick={onShuffle}
+                  title="Shuffle video"
+                  aria-label="Shuffle video"
+                >
+                  <Shuffle size={17} />
+                </button>
+              </div>
 
               <span className="track-counter">
                 {currentIndex + 1} of {totalSongs}
@@ -209,70 +211,79 @@ export default function VideoPlayer({
             </div>
 
             <div className="player-view-controls">
-              {/* Volume Button */}
-              <button
-                type="button"
-                className="btn btn-icon"
-                onClick={toggleMute}
-                title={isMuted ? "Unmute audio" : "Mute audio"}
-                aria-label={isMuted ? "Unmute audio" : "Mute audio"}
-              >
-                {isMuted ? <VolumeX size={17} /> : <Volume2 size={17} />}
-              </button>
-
-              {hasLyrics && (
+              <div className="view-tools-cluster">
+                {/* Volume Button */}
                 <button
                   type="button"
-                  className={`btn btn-secondary btn-sm ${showLyrics ? 'active' : ''}`}
-                  onClick={() => setShowLyrics(!showLyrics)}
+                  className="btn btn-icon"
+                  onClick={toggleMute}
+                  title={isMuted ? "Unmute audio" : "Mute audio"}
+                  aria-label={isMuted ? "Unmute audio" : "Mute audio"}
                 >
-                  <Music size={14} />
-                  <span>{showLyrics ? 'Hide Lyrics' : 'Lyrics'}</span>
+                  {isMuted ? <VolumeX size={17} /> : <Volume2 size={17} />}
                 </button>
-              )}
 
-              <button
-                type="button"
-                className="btn btn-icon"
-                onClick={() => setTheaterMode(!theaterMode)}
-                title={theaterMode ? 'Exit theater mode' : 'Theater mode'}
-                aria-label={theaterMode ? 'Exit theater mode' : 'Theater mode'}
-              >
-                {theaterMode ? <Minimize2 size={17} /> : <Maximize2 size={17} />}
-              </button>
+                {/* Theater Mode */}
+                <button
+                  type="button"
+                  className="btn btn-icon"
+                  onClick={() => setTheaterMode(!theaterMode)}
+                  title={theaterMode ? 'Exit theater mode' : 'Theater mode'}
+                  aria-label={theaterMode ? 'Exit theater mode' : 'Theater mode'}
+                >
+                  {theaterMode ? <Minimize2 size={17} /> : <Maximize2 size={17} />}
+                </button>
 
-              <button
-                type="button"
-                className="btn btn-secondary btn-sm"
-                onClick={handleCopyLink}
-                title="Copy shareable link"
-                aria-label="Copy shareable link"
-              >
-                {copied ? <Check size={14} className="text-success" /> : <Share2 size={14} />}
-                <span>{copied ? 'Copied!' : 'Copy Link'}</span>
-              </button>
+                {/* WhatsApp Share */}
+                <button
+                  type="button"
+                  className="btn btn-icon btn-whatsapp"
+                  onClick={handleShareWhatsApp}
+                  title="Share on WhatsApp with preview"
+                  aria-label="Share on WhatsApp with preview"
+                >
+                  <MessageCircle size={16} />
+                </button>
 
-              <button
-                type="button"
-                className="btn btn-icon btn-whatsapp"
-                onClick={handleShareWhatsApp}
-                title="Share on WhatsApp with preview"
-                aria-label="Share on WhatsApp with preview"
-              >
-                <MessageCircle size={16} />
-              </button>
+                {/* Lyrics Button */}
+                {hasLyrics && (
+                  <button
+                    type="button"
+                    className={`btn btn-secondary btn-sm ${showLyrics ? 'active' : ''}`}
+                    onClick={() => setShowLyrics(!showLyrics)}
+                  >
+                    <Music size={14} />
+                    <span>{showLyrics ? 'Hide' : 'Lyrics'}</span>
+                  </button>
+                )}
+              </div>
 
-              <a
-                href={youtubeWatchUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-secondary btn-sm"
-                title="Visit YouTube page"
-                aria-label="Visit YouTube page"
-              >
-                <ExternalLink size={14} />
-                <span>Visit Page</span>
-              </a>
+              <div className="view-actions-cluster">
+                {/* Copy Link */}
+                <button
+                  type="button"
+                  className="btn btn-secondary btn-sm btn-action-pill"
+                  onClick={handleCopyLink}
+                  title="Copy shareable link"
+                  aria-label="Copy shareable link"
+                >
+                  {copied ? <Check size={14} className="text-success" /> : <Share2 size={14} />}
+                  <span>{copied ? 'Copied!' : 'Copy Link'}</span>
+                </button>
+
+                {/* Visit YouTube Page */}
+                <a
+                  href={youtubeWatchUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-secondary btn-sm btn-action-pill"
+                  title="Visit YouTube page"
+                  aria-label="Visit YouTube page"
+                >
+                  <ExternalLink size={14} />
+                  <span>Visit Page</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
