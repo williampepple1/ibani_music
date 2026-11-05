@@ -234,17 +234,6 @@ export default function VideoPlayer({
                   {theaterMode ? <Minimize2 size={17} /> : <Maximize2 size={17} />}
                 </button>
 
-                {/* WhatsApp Share */}
-                <button
-                  type="button"
-                  className="btn btn-icon btn-whatsapp"
-                  onClick={handleShareWhatsApp}
-                  title="Share on WhatsApp with preview"
-                  aria-label="Share on WhatsApp with preview"
-                >
-                  <MessageCircle size={16} />
-                </button>
-
                 {/* Lyrics Button */}
                 {hasLyrics && (
                   <button
@@ -259,6 +248,18 @@ export default function VideoPlayer({
               </div>
 
               <div className="view-actions-cluster">
+                {/* Share to WhatsApp */}
+                <button
+                  type="button"
+                  className="btn btn-secondary btn-sm btn-whatsapp btn-action-pill"
+                  onClick={handleShareWhatsApp}
+                  title="Share to WhatsApp with video preview"
+                  aria-label="Share to WhatsApp"
+                >
+                  <MessageCircle size={15} />
+                  <span>Share to WhatsApp</span>
+                </button>
+
                 {/* Copy Link */}
                 <button
                   type="button"
