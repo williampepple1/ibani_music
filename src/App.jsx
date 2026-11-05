@@ -11,12 +11,12 @@ import { INITIAL_IBANI_SONGS } from './data/ibaniSongs';
 import './App.css';
 
 const STORAGE_KEY_CUSTOM_SONGS = 'ibani_custom_songs_v1';
-const STORAGE_KEY_THEME = 'ibani_theme_v1';
+const STORAGE_KEY_THEME = 'ibani_theme_v2';
 
 export default function App() {
-  // Theme state
+  // Theme state: 'minimal' (Clean Light) | 'studio' (Spotify Dark) | 'warm' (Terracotta & Sand) | 'royal' (Navy)
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem(STORAGE_KEY_THEME) || 'dark';
+    return localStorage.getItem(STORAGE_KEY_THEME) || 'minimal';
   });
 
   // Active navigation tab
@@ -129,7 +129,7 @@ export default function App() {
       <Navbar
         onOpenAddModal={() => setIsAddModalOpen(true)}
         theme={theme}
-        onToggleTheme={toggleTheme}
+        onChangeTheme={setTheme}
         activeTab={activeTab}
         onSelectTab={setActiveTab}
       />

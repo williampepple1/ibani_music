@@ -1,7 +1,7 @@
 import React from 'react';
-import { Music, PlusCircle, BookOpen, Sun, Moon, Info, Sparkles } from 'lucide-react';
+import { Music, PlusCircle, BookOpen, Info, Palette } from 'lucide-react';
 
-export default function Navbar({ onOpenAddModal, theme, onToggleTheme, activeTab, onSelectTab }) {
+export default function Navbar({ onOpenAddModal, theme, onChangeTheme, activeTab, onSelectTab }) {
   return (
     <header className="navbar">
       <div className="container nav-container">
@@ -15,12 +15,11 @@ export default function Navbar({ onOpenAddModal, theme, onToggleTheme, activeTab
           }}
         >
           <div className="brand-badge">
-            <span className="badge-glow"></span>
-            <Music className="brand-icon" size={24} />
+            <Music className="brand-icon" size={20} />
           </div>
           <div className="brand-text">
             <span className="brand-title">Ịbạnị Nume</span>
-            <span className="brand-subtitle">Ibani Language Music & Heritage</span>
+            <span className="brand-subtitle">Ibani Music & Language Archive</span>
           </div>
         </a>
 
@@ -30,7 +29,7 @@ export default function Navbar({ onOpenAddModal, theme, onToggleTheme, activeTab
             className={`nav-btn ${activeTab === 'player' ? 'active' : ''}`}
             onClick={() => onSelectTab('player')}
           >
-            <Music size={17} />
+            <Music size={16} />
             <span>Music Vault</span>
           </button>
 
@@ -39,7 +38,7 @@ export default function Navbar({ onOpenAddModal, theme, onToggleTheme, activeTab
             className={`nav-btn ${activeTab === 'language' ? 'active' : ''}`}
             onClick={() => onSelectTab('language')}
           >
-            <BookOpen size={17} />
+            <BookOpen size={16} />
             <span>Learn Ibani</span>
           </button>
 
@@ -48,28 +47,34 @@ export default function Navbar({ onOpenAddModal, theme, onToggleTheme, activeTab
             className={`nav-btn ${activeTab === 'about' ? 'active' : ''}`}
             onClick={() => onSelectTab('about')}
           >
-            <Info size={17} />
+            <Info size={16} />
             <span>Kingdom & History</span>
           </button>
         </nav>
 
         <div className="nav-actions">
-          <button
-            type="button"
-            className="btn btn-secondary theme-toggle-btn"
-            onClick={onToggleTheme}
-            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-          >
-            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
+          {/* Theme Selector */}
+          <div className="theme-select-box" title="Change site theme">
+            <Palette size={15} />
+            <select
+              className="theme-dropdown"
+              value={theme}
+              onChange={(e) => onChangeTheme(e.target.value)}
+              aria-label="Theme selector"
+            >
+              <option value="minimal">Clean Minimal (Light)</option>
+              <option value="studio">Midnight Studio (Dark)</option>
+              <option value="warm">Warm Earth & Sand</option>
+              <option value="royal">Royal Riverine (Navy)</option>
+            </select>
+          </div>
 
           <button
             type="button"
             className="btn btn-primary add-video-nav-btn"
             onClick={onOpenAddModal}
           >
-            <PlusCircle size={18} />
+            <PlusCircle size={17} />
             <span>Add YouTube Song</span>
           </button>
         </div>
@@ -77,4 +82,3 @@ export default function Navbar({ onOpenAddModal, theme, onToggleTheme, activeTab
     </header>
   );
 }
-
