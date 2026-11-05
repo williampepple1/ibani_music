@@ -222,11 +222,12 @@ export default function VideoPlayer({
                 href={youtubeWatchUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-icon"
-                title="Open on YouTube"
-                aria-label="Open on YouTube"
+                className="btn btn-secondary btn-sm"
+                title="Visit YouTube page"
+                aria-label="Visit YouTube page"
               >
-                <ExternalLink size={17} />
+                <ExternalLink size={14} />
+                <span>Visit Page</span>
               </a>
             </div>
           </div>
