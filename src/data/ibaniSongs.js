@@ -654,5 +654,29 @@ export const INITIAL_IBANI_SONGS = [
     lyrics: [
       { ibani: 'Tamuno bo, wa kuro bo', english: 'God has arrived with mercy and strength for His people' }
     ]
+  },
+  {
+    id: 'ibani-dancers-bonny-opobo',
+    youtubeId: 'WROWp3Qn1dc',
+    title: 'Ibani Dancers (Bonny and Opobo)',
+    artist: 'Gabriel Effa Ndik Wilcox',
+    category: 'Cultural Dance',
+    year: 'Traditional',
+    duration: '5:15',
+    lyrics: [
+      { ibani: 'Ibani seghi wa koroma, biri so', english: 'Traditional dance and drum rhythms of Bonny and Opobo' }
+    ]
+  },
+  {
+    id: 'ibani-dancers-opobo',
+    youtubeId: 'ltKPBXinZ9E',
+    title: 'Ibani Dancers (Opobo)',
+    artist: 'Gabriel Effa Ndik Wilcox',
+    category: 'Cultural Dance',
+    year: 'Traditional',
+    duration: '5:21',
+    lyrics: [
+      { ibani: 'Opobo biri wa seghi bo, wa soni ye', english: 'Graceful Ibani cultural waist dance of Opobo Kingdom' }
+    ]
   }
 ];
